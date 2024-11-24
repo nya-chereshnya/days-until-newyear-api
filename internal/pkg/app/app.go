@@ -18,7 +18,7 @@ func New() *App {
 	a.s = service.New()
 	a.e = endpoint.New(a.s)
 	a.gin = gin.Default()
-	a.gin.Use(mw.RoleCheck())
+	a.gin.Use(mw.RoleCheck(), mw.RequestLogger(), mw.ResponseLogger())
 	a.gin.GET("/", a.e.Status)
 	return a
 }
