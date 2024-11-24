@@ -5,6 +5,7 @@ import (
 	"github.com/days-until-newyear/internal/app/mw"
 	"github.com/days-until-newyear/internal/app/service"
 	"github.com/gin-gonic/gin"
+	// "runtime"
 )
 
 type App struct {
@@ -18,8 +19,12 @@ func New() *App {
 	a.s = service.New()
 	a.e = endpoint.New(a.s)
 	a.gin = gin.Default()
+	a.gin.Static("/static", "../../web/static")
+	a.gin.LoadHTMLGlob("../../web/templates/*")
 	a.gin.Use(mw.RoleCheck(), mw.RequestLogger(), mw.ResponseLogger())
 	a.gin.GET("/", a.e.Status)
+	//	a.gin.GET("/api/status", a.e.Status) // REST API
+
 	return a
 }
 
