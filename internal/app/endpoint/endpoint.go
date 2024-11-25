@@ -20,11 +20,7 @@ func New(s Service) *Endpoint {
 	}
 }
 
-func (e *Endpoint) Status(c *gin.Context) {
+func (e *Endpoint) GetStatus(c *gin.Context) {
 	d := e.s.DaysLeft()
-	h := gin.H{
-		"Status": d,
-	}
-	c.HTML(http.StatusOK, "index.html", h)
-	// c.String(http.StatusOK, "time until 01.01.2025: %d", d)
+	c.IndentedJSON(http.StatusOK, d)
 }
